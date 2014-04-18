@@ -1,0 +1,28 @@
+#!/bin/bash
+
+mkdir -p /var/run/sshd
+cat > /etc/supervisor/conf.d/sshd.conf <<EOF
+[program:sshd]
+directory=/
+command=/usr/sbin/sshd -D
+user=root
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s_error.log
+EOF
+
+mkdir -p /var/run/redis
+cat > /etc/supervisor/conf.d/redis.conf <<EOF
+[program:redis]
+directory=/var/run/redis
+command=/usr/bin/redis-server /etc/redis/redis.conf
+user=redis
+autostart=false
+autorestart=true
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s_error.log
+EOF
+
+sed 's/daemonize yes/daemonize no/' -i /etc/redis/redis.conf
+sed 's/bind 127.0.0.1/bind 0.0.0.0/' -i /etc/redis/redis.conf
