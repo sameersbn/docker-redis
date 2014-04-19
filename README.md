@@ -4,8 +4,6 @@
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
     - [Data Store](#data-store)
-    - [Securing the server](#securing-the-server)
-    - [Allowing remote access](#allowing-remote-access)
 - [Maintenance](#maintenance)
     - [SSH Login](#ssh-login)
 
