@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 # generate a password for root.
@@ -9,9 +8,10 @@ echo User: root Password: $ROOT_PASSWORD
 
 # start supervisord
 /usr/bin/supervisord
+supervisorctl start sshd
 
 appStart () {
-	chown -R redis:redis /var/run/redis /var/lib/redis
+	chown -R redis:redis /var/lib/redis
 	supervisorctl start redis
 	tail -F /var/log/redis/redis-server.log
 }

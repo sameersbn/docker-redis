@@ -1,15 +1,16 @@
-FROM sameersbn/ubuntu:20140418
+FROM sameersbn/ubuntu:12.04.20140418
 MAINTAINER sameer@damagehead.com
 
-# image specific
-RUN apt-get install -y redis-server && apt-get clean
+RUN apt-get update && \
+		apt-get install -y redis-server && \
+		apt-get clean # 20140418
 
 ADD assets/ /app/
-RUN chmod 755 /app/init /app/setup/install && /app/setup/install
+RUN chmod 755 /app/init /app/setup/install
+RUN /app/setup/install
 
 ADD authorized_keys /root/.ssh/
 
-EXPOSE 22
 EXPOSE 6379
 
 VOLUME ["/var/lib/redis"]
