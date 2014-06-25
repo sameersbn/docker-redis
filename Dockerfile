@@ -1,7 +1,8 @@
 FROM sameersbn/ubuntu:12.04.20140519
 MAINTAINER sameer@damagehead.com
 
-RUN apt-get update && \
+RUN add-apt-repository -y ppa:chris-lea/redis-server && \
+		apt-get update && \
 		apt-get install -y redis-server && \
 		apt-get clean # 20140625
 
