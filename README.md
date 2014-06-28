@@ -5,7 +5,6 @@
 - [Configuration](#configuration)
     - [Data Store](#data-store)
 - [Maintenance](#maintenance)
-    - [SSH Login](#ssh-login)
 
 # Introduction
 Dockerfile to build a redis container image which can be linked to other containers.
@@ -54,16 +53,6 @@ docker run -name redis -d \
 This will make sure that the data stored in the database is not lost when the image is stopped and started again.
 
 # Maintenance
-
-## SSH Login
-There are two methods to gain root login to the container, the first method is to add your public rsa key to the authorized_keys file and build the image.
-
-The second method is use the dynamically generated password. Every time the container is started a random password is generated using the pwgen tool and assigned to the root user. This password can be fetched from the docker logs.
-
-```
-docker logs redis 2>&1 | grep '^User: ' | tail -n1
-```
-This password is not persistent and changes every time the image is executed.
 
 # Upgrading
 
