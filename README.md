@@ -5,6 +5,7 @@
 - [Configuration](#configuration)
     - [Data Store](#data-store)
 - [Maintenance](#maintenance)
+    - [Upgrading](#upgrading)
 
 # Introduction
 Dockerfile to build a redis container image which can be linked to other containers.
