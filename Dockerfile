@@ -12,4 +12,4 @@ RUN sed 's/daemonize yes/daemonize no/' -i /etc/redis/redis.conf && \
 
 EXPOSE 6379
 VOLUME ["/var/lib/redis"]
-CMD ["/usr/bin/redis-server", "/etc/redis/redis.conf"]
+CMD sudo -u redis -H /usr/bin/redis-server /etc/redis/redis.conf
