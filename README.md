@@ -4,8 +4,7 @@
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
     - [Data Store](#data-store)
-- [Maintenance](#maintenance)
-    - [Upgrading](#upgrading)
+- [Upgrading](#upgrading)
 
 # Introduction
 Dockerfile to build a redis container image which can be linked to other containers.
@@ -52,8 +51,6 @@ docker run -name redis -d \
 ```
 
 This will make sure that the data stored in the database is not lost when the image is stopped and started again.
-
-# Maintenance
 
 # Upgrading
 
