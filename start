@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+chown -R redis:redis /var/lib/redis
+sudo -u redis -H /usr/bin/redis-server /etc/redis/redis.conf
