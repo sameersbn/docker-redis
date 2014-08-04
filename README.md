@@ -30,13 +30,12 @@ Run the redis image
 
 ```
 docker run -name redis -d sameersbn/redis:latest
-REDIS_IP=$(docker inspect redis | grep IPAddres | awk -F'"' '{print $4}')
 ```
 
 To test if the redis server is configured properly, try connecting to the server.
 
 ```
-redis-cli -h ${REDIS_IP}
+redis-cli -h $(docker inspect --format {{.NetworkSettings.IPAddress}} redis)
 ```
 
 # Configuration
