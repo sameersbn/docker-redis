@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-chown -R redis:redis /var/run/redis
-chmod 755 /var/run/redis
+chown -R redis:redis /run/redis
+chmod 755 /run/redis
 
 chown -R redis:redis /var/lib/redis
 exec sudo -u redis -H /usr/bin/redis-server /etc/redis/redis.conf
