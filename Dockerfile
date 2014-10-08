@@ -1,4 +1,4 @@
-FROM sameersbn/debian:jessie.20141001
+FROM sameersbn/ubuntu:14.04.20141001
 MAINTAINER sameer@damagehead.com
 
 RUN apt-get update \
@@ -7,8 +7,8 @@ RUN apt-get update \
 
 RUN sed 's/^daemonize yes/daemonize no/' -i /etc/redis/redis.conf \
  && sed 's/^bind 127.0.0.1/bind 0.0.0.0/' -i /etc/redis/redis.conf \
- && sed 's,^# unixsocket /tmp/redis.sock,unixsocket /run/redis/redis.sock,' -i /etc/redis/redis.conf \
- && sed 's/^# unixsocketperm 700/unixsocketperm 777/' -i /etc/redis/redis.conf \
+ && sed 's/^# unixsocket /unixsocket /' -i /etc/redis/redis.conf \
+ && sed 's/^# unixsocketperm 755/unixsocketperm 777/' -i /etc/redis/redis.conf \
  && sed '/^logfile/d' -i /etc/redis/redis.conf
 
 ADD start /start
