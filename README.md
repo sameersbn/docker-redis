@@ -6,6 +6,7 @@
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
     - [Data Store](#data-store)
+- [Shell Access](#shell-access)
 - [Upgrading](#upgrading)
 
 # Introduction
@@ -89,6 +90,32 @@ docker run -name redis -d \
 ```
 
 This will make sure that the data stored in the database is not lost when the image is stopped and started again.
+
+# Shell Access
+
+For debugging and maintenance purposes you may want access the containers shell. If you are using docker version `1.3.0` or higher you can access a running containers shell using `docker exec` command.
+
+```bash
+docker exec -it redis bash
+```
+
+If you are using an older version of docker, you can use the [nsenter](http://man7.org/linux/man-pages/man1/nsenter.1.html) linux tool (part of the util-linux package) to access the container shell.
+
+Some linux distros (e.g. ubuntu) use older versions of the util-linux which do not include the `nsenter` tool. To get around this @jpetazzo has created a nice docker image that allows you to install the `nsenter` utility and a helper script named `docker-enter` on these distros.
+
+To install `nsenter` execute the following command on your host,
+
+```bash
+docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
+```
+
+Now you can access the container shell using the command
+
+```bash
+sudo docker-enter redis
+```
+
+For more information refer https://github.com/jpetazzo/nsenter
 
 # Upgrading
 
