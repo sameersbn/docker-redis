@@ -1,9 +1,9 @@
-FROM sameersbn/ubuntu:14.04.20150323
+FROM sameersbn/ubuntu:14.04.20150504
 MAINTAINER sameer@damagehead.com
 
 RUN apt-get update \
  && apt-get install -y redis-server \
- && rm -rf /var/lib/apt/lists/* # 20150323
+ && rm -rf /var/lib/apt/lists/* # 20150504
 
 RUN sed 's/^daemonize yes/daemonize no/' -i /etc/redis/redis.conf \
  && sed 's/^bind 127.0.0.1/bind 0.0.0.0/' -i /etc/redis/redis.conf \
