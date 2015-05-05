@@ -1,0 +1,15 @@
+machine:
+  services:
+    - docker
+dependencies:
+  cache_directories:
+    - "~/docker-redis"
+  override:
+    - docker info
+    - if [[ -e ~/docker-redis/image.tar ]]; then docker load --input ~/docker-redis/image.tar; fi
+    - docker build -t sameersbn/redis .
+    - mkdir -p ~/docker-redis; docker save --output ~/docker-redis/image.tar sameersbn/redis
+test:
+  override:
+    - docker run -d -p 172.17.42.1:26379:6379 sameersbn/redis; sleep 10
+    - nc -z 172.17.42.1 26379
