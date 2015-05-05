@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/sameersbn/docker-redis.svg?style=svg)](https://circleci.com/gh/sameersbn/docker-redis)
+
 # Table of Contents
 - [Introduction](#introduction)
 - [Contributing](#contributing)
