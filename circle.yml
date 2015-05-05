@@ -11,5 +11,5 @@ dependencies:
     - mkdir -p ~/docker-redis; docker save --output ~/docker-redis/image.tar sameersbn/redis
 test:
   override:
-    - docker run -d -p 26379:6379 sameersbn/redis; sleep 10
-    - nc -z 127.0.0.1 26379
+    - docker run -d --name=redis sameersbn/redis; sleep 10
+    - docker run -it --volumes-from=redis sameersbn/redis redis-cli -s /var/run/redis/redis.sock PING
