@@ -18,6 +18,4 @@ EXPOSE 6379
 
 VOLUME ["/var/lib/redis"]
 VOLUME ["/run/redis"]
-
-USER redis
 CMD ["/start"]
