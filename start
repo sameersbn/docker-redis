@@ -13,9 +13,9 @@ if [ "${USERMAP_UID}" != "${USERMAP_ORIG_UID}" ] || [ "${USERMAP_GID}" != "${USE
 fi
 
 mkdir -p -m 0755 /run/redis
-chown -R ${USERMAP_UID}:${USERMAP_GID} /run/redis
+chown -R redis:redis /run/redis
 
 mkdir -p -m 0755 /var/lib/redis
-chown -R ${USERMAP_UID}:${USERMAP_GID} /var/lib/redis
+chown -R redis:redis /var/lib/redis
 
 exec gosu redis /usr/bin/redis-server /etc/redis/redis.conf
