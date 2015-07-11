@@ -119,6 +119,14 @@ sudo docker-enter redis
 
 For more information refer https://github.com/jpetazzo/nsenter
 
+# Setting the user
+
+By setting the variables USERMAP_UID and USERMAP_GID you can set the user or group the server runs as, respectively.
+
+```bash
+docker run --name redis -e USERMAP_UID=$(id -u redis) -e USERMAP_GID=$(id -g redis) sameersbn/redis:latest
+```
+
 # Upgrading
 
 To upgrade to newer releases, simply follow this 3 step upgrade procedure.
