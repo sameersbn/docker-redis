@@ -7,6 +7,7 @@
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
+  - [Data Store](#data-store)
   - [Authentication](#authentication)
 - [Shell Access](#shell-access)
 - [Upgrading](#upgrading)
@@ -68,10 +69,11 @@ docker build -t="$USER/redis" .
 ```
 
 # Quick Start
+
 Run the redis image
 
 ```
-docker run -name redis -d sameersbn/redis:latest
+docker run --name redis -d sameersbn/redis:latest
 ```
 
 To test if the redis server is configured properly, try connecting to the server.
@@ -83,11 +85,12 @@ redis-cli -h $(docker inspect --format {{.NetworkSettings.IPAddress}} redis)
 # Configuration
 
 ## Data Store
+
 You should mount a volume at /var/lib/redis.
 
 ```
 mkdir -p /opt/redis
-docker run -name redis -d \
+docker run --name redis -d \
   -v /opt/redis:/var/lib/redis sameersbn/redis:latest
 ```
 
@@ -100,7 +103,7 @@ Redis can be instructed to require a password before allowing clients to execute
 For example,
 
 ```bash
-docker run -name redis -d \
+docker run --name redis -d \
   -e 'REDIS_PASSWORD=redispassword' \
   sameersbn/redis:latest
 ```
@@ -160,5 +163,5 @@ docker pull sameersbn/redis:latest
 - **Step 3**: Start the image
 
 ```
-docker run -name redis -d [OPTIONS] sameersbn/redis:latest
+docker run --name redis -d [OPTIONS] sameersbn/redis:latest
 ```
