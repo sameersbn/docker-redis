@@ -7,7 +7,7 @@
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
-    - [Data Store](#data-store)
+  - [Authentication](#authentication)
 - [Shell Access](#shell-access)
 - [Upgrading](#upgrading)
 
@@ -92,6 +92,20 @@ docker run -name redis -d \
 ```
 
 This will make sure that the data stored in the database is not lost when the image is stopped and started again.
+
+## Authentication
+
+Redis can be instructed to require a password before allowing clients to execute commands. This is done by specifying the `REDIS_PASSWORD` environment variable.
+
+For example,
+
+```bash
+docker run -name redis -d \
+  -e 'REDIS_PASSWORD=redispassword' \
+  sameersbn/redis:latest
+```
+
+Will require that the clients connecting to the redis server authenticate themselves with the `redispassword` password.
 
 # Shell Access
 

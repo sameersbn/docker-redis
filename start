@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+REDIS_PASSWORD=${REDIS_PASSWORD:-}
+
 ## Taken from sameersbn/docker-gitlab
 USERMAP_ORIG_UID=$(id -u redis)
 USERMAP_ORIG_GID=$(id -g redis)
@@ -18,4 +20,6 @@ chown -R redis:redis /run/redis
 mkdir -p -m 0755 /var/lib/redis
 chown -R redis:redis /var/lib/redis
 
-exec start-stop-daemon --start --chuid redis:redis --exec /usr/bin/redis-server -- /etc/redis/redis.conf
+set -x
+exec start-stop-daemon --start --chuid redis:redis --exec /usr/bin/redis-server -- \
+  /etc/redis/redis.conf ${REDIS_PASSWORD:+--requirepass $REDIS_PASSWORD}
