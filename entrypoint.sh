@@ -15,15 +15,18 @@ if [ "${USERMAP_UID}" != "${USERMAP_ORIG_UID}" ] || [ "${USERMAP_GID}" != "${USE
 fi
 
 # create socket dir
-mkdir -p -m 0755 /run/redis
+mkdir -p /run/redis
+chmod -R 0755 /run/redis
 chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
 
 # create data dir
-mkdir -p -m 0755 ${REDIS_DATA_DIR}
+mkdir -p ${REDIS_DATA_DIR}
+chmod -R 0755 ${REDIS_DATA_DIR}
 chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_DATA_DIR}
 
 # create log dif
-mkdir -p -m 0755 ${REDIS_LOG_DIR}
+mkdir -p ${REDIS_LOG_DIR}
+chmod -R 0755 ${REDIS_LOG_DIR}
 chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_LOG_DIR}
 
 # allow arguments to be passed to redis-server
