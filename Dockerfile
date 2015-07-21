@@ -1,6 +1,8 @@
 FROM sameersbn/ubuntu:14.04.20150712
 MAINTAINER sameer@damagehead.com
 
+ENV REDIS_USER=redis
+
 RUN apt-get update \
  && apt-get install -y redis-server \
  && sed 's/^daemonize yes/daemonize no/' -i /etc/redis/redis.conf \

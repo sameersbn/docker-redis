@@ -15,10 +15,10 @@ if [ "${USERMAP_UID}" != "${USERMAP_ORIG_UID}" ] || [ "${USERMAP_GID}" != "${USE
 fi
 
 mkdir -p -m 0755 /run/redis
-chown -R redis:redis /run/redis
+chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
 
 mkdir -p -m 0755 /var/lib/redis
-chown -R redis:redis /var/lib/redis
+chown -R ${REDIS_USER}:${REDIS_USER} /var/lib/redis
 
-exec start-stop-daemon --start --chuid redis:redis --exec /usr/bin/redis-server -- \
+exec start-stop-daemon --start --chuid ${REDIS_USER}:${REDIS_USER} --exec /usr/bin/redis-server -- \
   /etc/redis/redis.conf ${REDIS_PASSWORD:+--requirepass $REDIS_PASSWORD}
