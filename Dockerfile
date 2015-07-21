@@ -10,7 +10,7 @@ RUN apt-get update \
  && sed '/^logfile/d' -i /etc/redis/redis.conf \
  && rm -rf /var/lib/apt/lists/*
 
-ADD start /start
+COPY start /start
 RUN chmod 755 /start
 
 EXPOSE 6379
