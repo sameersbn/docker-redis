@@ -17,8 +17,8 @@ fi
 mkdir -p -m 0755 /run/redis
 chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
 
-mkdir -p -m 0755 /var/lib/redis
-chown -R ${REDIS_USER}:${REDIS_USER} /var/lib/redis
+mkdir -p -m 0755 ${REDIS_DATA_DIR}
+chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_DATA_DIR}
 
 exec start-stop-daemon --start --chuid ${REDIS_USER}:${REDIS_USER} --exec /usr/bin/redis-server -- \
   /etc/redis/redis.conf ${REDIS_PASSWORD:+--requirepass $REDIS_PASSWORD}

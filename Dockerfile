@@ -1,7 +1,8 @@
 FROM sameersbn/ubuntu:14.04.20150712
 MAINTAINER sameer@damagehead.com
 
-ENV REDIS_USER=redis
+ENV REDIS_USER=redis \
+    REDIS_DATA_DIR=/var/lib/redis
 
 RUN apt-get update \
  && apt-get install -y redis-server \
@@ -17,6 +18,6 @@ RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 6379
 
-VOLUME ["/var/lib/redis"]
+VOLUME ["${REDIS_DATA_DIR}"]
 VOLUME ["/run/redis"]
 CMD ["/sbin/entrypoint.sh"]
