@@ -2,7 +2,8 @@ FROM sameersbn/ubuntu:14.04.20150712
 MAINTAINER sameer@damagehead.com
 
 ENV REDIS_USER=redis \
-    REDIS_DATA_DIR=/var/lib/redis
+    REDIS_DATA_DIR=/var/lib/redis \
+    REDIS_LOG_DIR=/var/log/redis
 
 RUN apt-get update \
  && apt-get install -y redis-server \

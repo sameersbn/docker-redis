@@ -22,6 +22,10 @@ chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
 mkdir -p -m 0755 ${REDIS_DATA_DIR}
 chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_DATA_DIR}
 
+# create log dif
+mkdir -p -m 0755 ${REDIS_LOG_DIR}
+chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_LOG_DIR}
+
 # allow arguments to be passed to redis-server
 if [[ ${1:0:1} = '-' ]]; then
   EXTRA_ARGS="$@"
