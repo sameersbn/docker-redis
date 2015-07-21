@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+  labels:
+    name: redis
+spec:
+  containers:
+    - name: redis
+      image: sameersbn/redis
+      ports:
+        - containerPort: 6379
+          protocol: TCP
