@@ -1,167 +1,142 @@
-[![Circle CI](https://circleci.com/gh/sameersbn/docker-redis.svg?style=svg)](https://circleci.com/gh/sameersbn/docker-redis)
+[![Circle CI](https://circleci.com/gh/sameersbn/docker-redis.svg?style=shield)](https://circleci.com/gh/sameersbn/docker-redis)
 
-# Table of Contents
+# sameersbn/redis
+
 - [Introduction](#introduction)
-- [Contributing](#contributing)
-- [Reporting Issues](#reporting-issues)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Configuration](#configuration)
-  - [Data Store](#data-store)
+  - [Contributing](#contributing)
+  - [Issues](#issues)
+- [Getting started](#getting-started)
+  - [Installation](#installation)
+  - [Quickstart](#quickstart)
+  - [Persistence](#persistence)
   - [Authentication](#authentication)
-- [Shell Access](#shell-access)
-- [Upgrading](#upgrading)
+- [Maintenance](#maintenance)
+  - [Cache expiry](#cache-expiry)
+  - [Upgrading](#upgrading)
+  - [Shell Access](#shell-access)
 
 # Introduction
 
-Dockerfile to build a redis container image which can be linked to other containers.
+`Dockerfile` to create a [Docker](https://www.docker.com/) container image for [Redis](http://redis.io/).
 
-# Contributing
+Redis is an open source, BSD licensed, advanced key-value cache and store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets, sorted sets, bitmaps and hyperloglogs.
+
+## Contributing
 
 If you find this image useful here's how you can help:
 
-- Send a Pull Request with your awesome new features and bug fixes
-- Help new users with [Issues](https://github.com/sameersbn/docker-redis/issues) they may encounter
+- Send a pull request with your awesome features and bug fixes
+- Help users resolve their [issues](../../issues?q=is%3Aopen+is%3Aissue).
 - Support the development of this image with a [donation](http://www.damagehead.com/donate/)
 
-# Reporting Issues
+## Issues
 
-Docker is a relatively new project and is active being developed and tested by a thriving community of developers and testers and every release of docker features many enhancements and bugfixes.
+Before reporting your issue please try updating Docker to the latest version and check if it resolves the issue. Refer to the Docker [installation guide](https://docs.docker.com/installation) for instructions.
 
-Given the nature of the development and release cycle it is very important that you have the latest version of docker installed because any issue that you encounter might have already been fixed with a newer docker release.
+SELinux users should try disabling SELinux using the command `setenforce 0` to see if it resolves the issue.
 
-For ubuntu users I suggest [installing docker](https://docs.docker.com/installation/ubuntulinux/) using docker's own package repository since the version of docker packaged in the ubuntu repositories are a little dated.
+If the above recommendations do not help then [report your issue](../../issues/new) along with the following information:
 
-Here is the shortform of the installation of an updated version of docker on ubuntu.
+- Output of the `docker version` and `docker info` commands
+- The `docker run` command or `docker-compose.yml` used to start the image. Mask out the sensitive bits.
+- Please state if you are using [Boot2Docker](http://www.boot2docker.io), [VirtualBox](https://www.virtualbox.org), etc.
+
+# Getting started
+
+## Installation
+
+This image is available as a [trusted build](//hub.docker.com/u/sameersbn/redis) on the [Docker hub](//hub.docker.com) and is the recommended method of installation.
 
 ```bash
-sudo apt-get purge docker.io
-curl -s https://get.docker.io/ubuntu/ | sudo sh
-sudo apt-get update
-sudo apt-get install lxc-docker
-```
-
-Fedora and RHEL/CentOS users should try disabling selinux with `setenforce 0` and check if resolves the issue. If it does than there is not much that I can help you with. You can either stick with selinux disabled (not recommended by redhat) or switch to using ubuntu.
-
-If using the latest docker version and/or disabling selinux does not fix the issue then please file a issue request on the [issues](https://github.com/sameersbn/docker-redis/issues) page.
-
-In your issue report please make sure you provide the following information:
-
-- The host ditribution and release version.
-- Output of the `docker version` command
-- Output of the `docker info` command
-- The `docker run` command you used to run the image (mask out the sensitive bits).
-
-# Installation
-
-Pull the latest version of the image from the docker index. This is the recommended method of installation as it is easier to update image in the future. These builds are performed by the **Docker Trusted Build** service.
-
-```
 docker pull sameersbn/redis:latest
 ```
 
-Alternately you can build the image yourself.
-
-```
-git clone https://github.com/sameersbn/docker-redis.git
-cd docker-redis
-docker build -t="$USER/redis" .
-```
-
-# Quick Start
-
-Run the redis image
-
-```
-docker run --name redis -d sameersbn/redis:latest
-```
-
-To test if the redis server is configured properly, try connecting to the server.
-
-```
-redis-cli -h $(docker inspect --format {{.NetworkSettings.IPAddress}} redis)
-```
-
-# Configuration
-
-## Data Store
-
-You should mount a volume at /var/lib/redis.
-
-```
-mkdir -p /opt/redis
-docker run --name redis -d \
-  -v /opt/redis:/var/lib/redis sameersbn/redis:latest
-```
-
-This will make sure that the data stored in the database is not lost when the image is stopped and started again.
-
-## Authentication
-
-Redis can be instructed to require a password before allowing clients to execute commands. This is done by specifying the `REDIS_PASSWORD` environment variable.
-
-For example,
+Alternatively you can build the image yourself.
 
 ```bash
-docker run --name redis -d \
-  -e 'REDIS_PASSWORD=redispassword' \
+git clone https://github.com/sameersbn/docker-redis.git
+cd docker-redis
+docker build --tag $USER/redis .
+```
+
+## Quickstart
+
+Start Redis using:
+
+```bash
+docker run --name redis -d --restart=always \
+  --publish 6379:6379 \
+  --volume /srv/docker/redis:/var/lib/redis \
   sameersbn/redis:latest
 ```
 
-Will require that the clients connecting to the redis server authenticate themselves with the `redispassword` password.
+*Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
 
-# Shell Access
+> Any arguments specified on the `docker run` command are passed on the `redis-server` command.
 
-For debugging and maintenance purposes you may want access the containers shell. If you are using docker version `1.3.0` or higher you can access a running containers shell using `docker exec` command.
+## Persistence
+
+For Redis to preserve its state across container shutdown and startup you should mount a volume at `/var/lib/redis`.
+
+> *The [Quickstart](#quickstart) command already mounts a volume for persistence.*
+
+SELinux users should update the security context of the host mountpoint so that it plays nicely with Docker:
+
+```bash
+mkdir -p /srv/docker/redis
+chcon -Rt svirt_sandbox_file_t /srv/docker/redis
+```
+
+## Authentication
+
+To secure your Redis server with a password, specify the password in the `REDIS_PASSWORD` variable while starting the container.
+
+```bash
+docker run --name redis -d --restart=always \
+  --publish 6379:6379 \
+  --env 'REDIS_PASSWORD=redispassword' \
+  --volume /srv/docker/redis:/var/lib/redis \
+  sameersbn/redis:latest
+```
+
+Clients connecting to the Redis server will now have to authenticate themselves with the password `redispassword`.
+
+# Maintenance
+
+## Upgrading
+
+To upgrade to newer releases:
+
+  1. Download the updated Docker image:
+
+  ```bash
+  docker pull sameersbn/redis:latest
+  ```
+
+  2. Stop the currently running image:
+
+  ```bash
+  docker stop redis
+  ```
+
+  3. Remove the stopped container
+
+  ```bash
+  docker rm -v redis
+  ```
+
+  4. Start the updated image
+
+  ```bash
+  docker run -name redis -d \
+    [OPTIONS] \
+    sameersbn/redis:latest
+  ```
+
+## Shell Access
+
+For debugging and maintenance purposes you may want access the containers shell. If you are using Docker version `1.3.0` or higher you can access a running containers shell by starting `bash` using `docker exec`:
 
 ```bash
 docker exec -it redis bash
-```
-
-If you are using an older version of docker, you can use the [nsenter](http://man7.org/linux/man-pages/man1/nsenter.1.html) linux tool (part of the util-linux package) to access the container shell.
-
-Some linux distros (e.g. ubuntu) use older versions of the util-linux which do not include the `nsenter` tool. To get around this @jpetazzo has created a nice docker image that allows you to install the `nsenter` utility and a helper script named `docker-enter` on these distros.
-
-To install `nsenter` execute the following command on your host,
-
-```bash
-docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
-```
-
-Now you can access the container shell using the command
-
-```bash
-sudo docker-enter redis
-```
-
-For more information refer https://github.com/jpetazzo/nsenter
-
-# Setting the user
-
-By setting the variables USERMAP_UID and USERMAP_GID you can set the user or group the server runs as, respectively.
-
-```bash
-docker run --name redis -e USERMAP_UID=$(id -u redis) -e USERMAP_GID=$(id -g redis) sameersbn/redis:latest
-```
-
-# Upgrading
-
-To upgrade to newer releases, simply follow this 3 step upgrade procedure.
-
-- **Step 1**: Stop the currently running image
-
-```
-docker stop redis
-```
-
-- **Step 2**: Update the docker image.
-
-```
-docker pull sameersbn/redis:latest
-```
-
-- **Step 3**: Start the image
-
-```
-docker run --name redis -d [OPTIONS] sameersbn/redis:latest
 ```
