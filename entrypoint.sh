@@ -20,11 +20,20 @@ chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
 mkdir -p -m 0755 ${REDIS_DATA_DIR}
 chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_DATA_DIR}
 
+# allow arguments to be passed to redis-server
+if [[ ${1:0:1} = '-' ]]; then
+  EXTRA_ARGS="$@"
+  set --
+elif [[ ${1} == redis-server || ${1} == /usr/bin/redis-server ]]; then
+  EXTRA_ARGS="${@:2}"
+  set --
+fi
+
 # default behaviour is to launch redis-server
 if [[ -z ${1} ]]; then
   echo "Starting redis-server..."
   exec start-stop-daemon --start --chuid ${REDIS_USER}:${REDIS_USER} --exec /usr/bin/redis-server -- \
-    /etc/redis/redis.conf ${REDIS_PASSWORD:+--requirepass $REDIS_PASSWORD}
+    /etc/redis/redis.conf ${REDIS_PASSWORD:+--requirepass $REDIS_PASSWORD} ${EXTRA_ARGS}
 else
   exec "$@"
 fi
