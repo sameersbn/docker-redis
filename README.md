@@ -10,6 +10,7 @@
   - [Quickstart](#quickstart)
   - [Persistence](#persistence)
   - [Authentication](#authentication)
+  - [Logs](#logs)
 - [Maintenance](#maintenance)
   - [Cache expiry](#cache-expiry)
   - [Upgrading](#upgrading)
@@ -100,6 +101,23 @@ docker run --name redis -d --restart=always \
 ```
 
 Clients connecting to the Redis server will now have to authenticate themselves with the password `redispassword`.
+
+## Logs
+
+The Redis server logs are sent to the standard output by default. If you want the logs written to a logfile, provide the `--logfile` argument in the `docker run` command
+
+```bash
+docker run --name redis -d --restart=always \
+  --publish 6379:6379 \
+  --volume /srv/docker/redis:/var/lib/redis \
+  sameersbn/redis:latest --logfile /var/log/redis/redis-server.log
+```
+
+To access the Redis logs you can use `docker exec`. For example:
+
+```bash
+docker exec -it redis tail -f /var/log/redis/redis-server.log
+```
 
 # Maintenance
 
