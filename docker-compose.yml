@@ -1,0 +1,7 @@
+Redis:
+  image: sameersbn/redis:latest
+  ports:
+    - "6379:6379"
+  volumes:
+    - /srv/docker/redis:/var/lib/redis
+  restart: always
