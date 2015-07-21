@@ -3,7 +3,7 @@ MAINTAINER sameer@damagehead.com
 
 RUN apt-get update \
  && apt-get install -y redis-server \
- && rm -rf /var/lib/apt/lists/* # 20150712
+ && rm -rf /var/lib/apt/lists/*
 
 RUN sed 's/^daemonize yes/daemonize no/' -i /etc/redis/redis.conf \
  && sed 's/^bind 127.0.0.1/bind 0.0.0.0/' -i /etc/redis/redis.conf \
