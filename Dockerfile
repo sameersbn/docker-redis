@@ -10,11 +10,11 @@ RUN apt-get update \
  && sed '/^logfile/d' -i /etc/redis/redis.conf \
  && rm -rf /var/lib/apt/lists/*
 
-COPY start /start
-RUN chmod 755 /start
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 6379
 
 VOLUME ["/var/lib/redis"]
 VOLUME ["/run/redis"]
-CMD ["/start"]
+CMD ["/sbin/entrypoint.sh"]
