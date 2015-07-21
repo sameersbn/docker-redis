@@ -20,6 +20,5 @@ chown -R redis:redis /run/redis
 mkdir -p -m 0755 /var/lib/redis
 chown -R redis:redis /var/lib/redis
 
-set -x
 exec start-stop-daemon --start --chuid redis:redis --exec /usr/bin/redis-server -- \
   /etc/redis/redis.conf ${REDIS_PASSWORD:+--requirepass $REDIS_PASSWORD}
