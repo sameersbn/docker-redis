@@ -19,5 +19,4 @@ RUN chmod 755 /sbin/entrypoint.sh
 EXPOSE 6379
 
 VOLUME ["${REDIS_DATA_DIR}"]
-VOLUME ["/run/redis"]
 CMD ["/sbin/entrypoint.sh"]
