@@ -3,7 +3,7 @@ set -e
 
 REDIS_PASSWORD=${REDIS_PASSWORD:-}
 
-## Taken from sameersbn/docker-gitlab
+# map redis user
 USERMAP_ORIG_UID=$(id -u redis)
 USERMAP_ORIG_GID=$(id -g redis)
 USERMAP_GID=${USERMAP_GID:-${USERMAP_UID:-$USERMAP_ORIG_GID}}
@@ -14,9 +14,11 @@ if [ "${USERMAP_UID}" != "${USERMAP_ORIG_UID}" ] || [ "${USERMAP_GID}" != "${USE
   sed -i -e "s/:${USERMAP_ORIG_UID}:${USERMAP_GID}:/:${USERMAP_UID}:${USERMAP_GID}:/" /etc/passwd
 fi
 
+# create socket dir
 mkdir -p -m 0755 /run/redis
 chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
 
+# create data dir
 mkdir -p -m 0755 ${REDIS_DATA_DIR}
 chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_DATA_DIR}
 
