@@ -8,6 +8,7 @@
 - [Getting started](#getting-started)
   - [Installation](#installation)
   - [Quickstart](#quickstart)
+  - [Command-line arguments](#command-line-arguments)
   - [Persistence](#persistence)
   - [Authentication](#authentication)
   - [Logs](#logs)
@@ -73,7 +74,18 @@ docker run --name redis -d --restart=always \
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
 
-> Any arguments specified on the `docker run` command are passed on the `redis-server` command.
+## Command-line arguments
+
+You can customize the launch command of Redis server by specifying arguments to `redis-server` on the `docker run` command. For example the following command will enable the Append Only File persistence mode:
+
+```bash
+docker run --name redis -d --restart=always \
+  --publish 6379:6379 \
+  --volume /srv/docker/redis:/var/lib/redis \
+  sameersbn/redis:latest --appendonly yes
+```
+
+Please refer to http://redis.io/topics/config for further details.
 
 ## Persistence
 
@@ -102,9 +114,11 @@ docker run --name redis -d --restart=always \
 
 Clients connecting to the Redis server will now have to authenticate themselves with the password `redispassword`.
 
+Alternatively, the same can also be achieved using the [Command-line arguments](#command-line-arguments) feature to specify the `--requirepass` argument.
+
 ## Logs
 
-The Redis server logs are sent to the standard output by default. If you want the logs written to a logfile, provide the `--logfile` argument in the `docker run` command
+By default the Redis server logs are sent to the standard output. Using the [Command-line arguments](#command-line-arguments) feature you can configure the Redis server to send the log output to a file using the `--logfile` argument:
 
 ```bash
 docker run --name redis -d --restart=always \
