@@ -3,31 +3,40 @@ set -e
 
 REDIS_PASSWORD=${REDIS_PASSWORD:-}
 
-# map redis user
-USERMAP_ORIG_UID=$(id -u redis)
-USERMAP_ORIG_GID=$(id -g redis)
-USERMAP_GID=${USERMAP_GID:-${USERMAP_UID:-$USERMAP_ORIG_GID}}
-USERMAP_UID=${USERMAP_UID:-$USERMAP_ORIG_UID}
-if [ "${USERMAP_UID}" != "${USERMAP_ORIG_UID}" ] || [ "${USERMAP_GID}" != "${USERMAP_ORIG_GID}" ]; then
-  echo "Adapting uid and gid for redis:redis to $USERMAP_UID:$USERMAP_GID"
-  groupmod -g "${USERMAP_GID}" redis
-  sed -i -e "s/:${USERMAP_ORIG_UID}:${USERMAP_GID}:/:${USERMAP_UID}:${USERMAP_GID}:/" /etc/passwd
-fi
+map_redis_uid() {
+  USERMAP_ORIG_UID=$(id -u redis)
+  USERMAP_ORIG_GID=$(id -g redis)
+  USERMAP_GID=${USERMAP_GID:-${USERMAP_UID:-$USERMAP_ORIG_GID}}
+  USERMAP_UID=${USERMAP_UID:-$USERMAP_ORIG_UID}
+  if [ "${USERMAP_UID}" != "${USERMAP_ORIG_UID}" ] || [ "${USERMAP_GID}" != "${USERMAP_ORIG_GID}" ]; then
+    echo "Adapting uid and gid for redis:redis to $USERMAP_UID:$USERMAP_GID"
+    groupmod -g "${USERMAP_GID}" redis
+    sed -i -e "s/:${USERMAP_ORIG_UID}:${USERMAP_GID}:/:${USERMAP_UID}:${USERMAP_GID}:/" /etc/passwd
+  fi
+}
 
-# create socket dir
-mkdir -p /run/redis
-chmod -R 0755 /run/redis
-chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
+create_socket_dir() {
+  mkdir -p /run/redis
+  chmod -R 0755 /run/redis
+  chown -R ${REDIS_USER}:${REDIS_USER} /run/redis
+}
 
-# create data dir
-mkdir -p ${REDIS_DATA_DIR}
-chmod -R 0755 ${REDIS_DATA_DIR}
-chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_DATA_DIR}
+create_data_dir() {
+  mkdir -p ${REDIS_DATA_DIR}
+  chmod -R 0755 ${REDIS_DATA_DIR}
+  chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_DATA_DIR}
+}
 
-# create log dif
-mkdir -p ${REDIS_LOG_DIR}
-chmod -R 0755 ${REDIS_LOG_DIR}
-chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_LOG_DIR}
+create_log_dir() {
+  mkdir -p ${REDIS_LOG_DIR}
+  chmod -R 0755 ${REDIS_LOG_DIR}
+  chown -R ${REDIS_USER}:${REDIS_USER} ${REDIS_LOG_DIR}
+}
+
+map_redis_uid
+create_socket_dir
+create_data_dir
+create_socket_dir
 
 # allow arguments to be passed to redis-server
 if [[ ${1:0:1} = '-' ]]; then
