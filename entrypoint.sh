@@ -42,9 +42,6 @@ create_socket_dir
 if [[ ${1:0:1} = '-' ]]; then
   EXTRA_ARGS="$@"
   set --
-elif [[ ${1} == redis-server || ${1} == $(which redis-server) ]]; then
-  EXTRA_ARGS="${@:2}"
-  set --
 fi
 
 # default behaviour is to launch redis-server
