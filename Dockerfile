@@ -6,7 +6,7 @@ ENV REDIS_USER=redis \
     REDIS_LOG_DIR=/var/log/redis
 
 RUN apt-get update \
- && apt-get install -y redis-server \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y redis-server \
  && sed 's/^daemonize yes/daemonize no/' -i /etc/redis/redis.conf \
  && sed 's/^bind 127.0.0.1/bind 0.0.0.0/' -i /etc/redis/redis.conf \
  && sed 's/^# unixsocket /unixsocket /' -i /etc/redis/redis.conf \
