@@ -1,6 +1,6 @@
 [![Circle CI](https://circleci.com/gh/sameersbn/docker-redis.svg?style=shield)](https://circleci.com/gh/sameersbn/docker-redis)
 
-# sameersbn/redis
+# quay.io/sameersbn/redis
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
@@ -47,10 +47,10 @@ If the above recommendations do not help then [report your issue](../../issues/n
 
 ## Installation
 
-This image is available as a [trusted build](//hub.docker.com/r/sameersbn/redis) on the [Docker hub](//hub.docker.com) and is the recommended method of installation.
+Automated builds of the image are available on [Quay.io](https://quay.io/repository/sameersbn/redis) and is the recommended method of installation.
 
 ```bash
-docker pull sameersbn/redis:latest
+docker pull quay.io/sameersbn/redis:latest
 ```
 
 Alternatively you can build the image yourself.
@@ -69,7 +69,7 @@ Start Redis using:
 docker run --name redis -d --restart=always \
   --publish 6379:6379 \
   --volume /srv/docker/redis:/var/lib/redis \
-  sameersbn/redis:latest
+  quay.io/sameersbn/redis:latest
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -82,7 +82,7 @@ You can customize the launch command of Redis server by specifying arguments to 
 docker run --name redis -d --restart=always \
   --publish 6379:6379 \
   --volume /srv/docker/redis:/var/lib/redis \
-  sameersbn/redis:latest --appendonly yes
+  quay.io/sameersbn/redis:latest --appendonly yes
 ```
 
 Please refer to http://redis.io/topics/config for further details.
@@ -109,7 +109,7 @@ docker run --name redis -d --restart=always \
   --publish 6379:6379 \
   --env 'REDIS_PASSWORD=redispassword' \
   --volume /srv/docker/redis:/var/lib/redis \
-  sameersbn/redis:latest
+  quay.io/sameersbn/redis:latest
 ```
 
 Clients connecting to the Redis server will now have to authenticate themselves with the password `redispassword`.
@@ -124,7 +124,7 @@ By default the Redis server logs are sent to the standard output. Using the [Com
 docker run --name redis -d --restart=always \
   --publish 6379:6379 \
   --volume /srv/docker/redis:/var/lib/redis \
-  sameersbn/redis:latest --logfile /var/log/redis/redis-server.log
+  quay.io/sameersbn/redis:latest --logfile /var/log/redis/redis-server.log
 ```
 
 To access the Redis logs you can use `docker exec`. For example:
@@ -142,7 +142,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull sameersbn/redis:latest
+  docker pull quay.io/sameersbn/redis:latest
   ```
 
   2. Stop the currently running image:
@@ -162,7 +162,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name redis -d \
     [OPTIONS] \
-    sameersbn/redis:latest
+    quay.io/sameersbn/redis:latest
   ```
 
 ## Shell Access

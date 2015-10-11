@@ -1,5 +1,5 @@
 Redis:
-  image: sameersbn/redis:latest
+  image: quay.io/sameersbn/redis:latest
   ports:
     - "6379:6379"
   volumes:
