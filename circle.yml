@@ -12,4 +12,4 @@ dependencies:
 test:
   override:
     - docker run -d --name=redis sameersbn/redis; sleep 10
-    - docker run -it --volumes-from=redis sameersbn/redis redis-cli -s /var/run/redis/redis.sock PING
+    - docker run --volumes-from=redis sameersbn/redis redis-cli -s /var/run/redis/redis.sock PING
