@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: redis
-      image: quay.io/sameersbn/redis
+      image: sameersbn/redis
       ports:
         - containerPort: 6379
           protocol: TCP
