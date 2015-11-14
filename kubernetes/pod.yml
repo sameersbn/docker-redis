@@ -11,3 +11,9 @@ spec:
       ports:
         - containerPort: 6379
           protocol: TCP
+      volumeMounts:
+        - mountPath: /var/lib/redis
+          name: data
+  volumes:
+    - name: data
+      emptyDir: {}
