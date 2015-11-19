@@ -58,9 +58,7 @@ docker pull sameersbn/redis:latest
 Alternatively you can build the image yourself.
 
 ```bash
-git clone https://github.com/sameersbn/docker-redis.git
-cd docker-redis
-docker build --tag $USER/redis .
+docker build -t sameersbn/redis github.com/sameersbn/docker-redis
 ```
 
 ## Quickstart
