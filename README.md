@@ -159,7 +159,7 @@ To upgrade to newer releases:
   4. Start the updated image
 
   ```bash
-  docker run -name redis -d \
+  docker run --name redis -d \
     [OPTIONS] \
     sameersbn/redis:latest
   ```
