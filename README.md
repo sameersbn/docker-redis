@@ -13,7 +13,6 @@
   - [Authentication](#authentication)
   - [Logs](#logs)
 - [Maintenance](#maintenance)
-  - [Cache expiry](#cache-expiry)
   - [Upgrading](#upgrading)
   - [Shell Access](#shell-access)
 
