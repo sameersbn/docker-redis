@@ -36,7 +36,7 @@ create_log_dir() {
 map_redis_uid
 create_socket_dir
 create_data_dir
-create_socket_dir
+create_log_dir
 
 # allow arguments to be passed to redis-server
 if [[ ${1:0:1} = '-' ]]; then
