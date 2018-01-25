@@ -1,4 +1,4 @@
-FROM sameersbn/ubuntu:14.04.20170228
+FROM sameersbn/ubuntu:16.04.20180124
 MAINTAINER sameer@damagehead.com
 
 ENV REDIS_USER=redis \
