@@ -1,5 +1,5 @@
 Redis:
-  image: sameersbn/redis:latest
+  image: sameersbn/redis:3.0.6
   ports:
     - "6379:6379"
   volumes:
