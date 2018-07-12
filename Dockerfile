@@ -1,12 +1,13 @@
 FROM ubuntu:xenial-20180525
 LABEL maintainer="sameer@damagehead.com"
 
-ENV REDIS_USER=redis \
+ENV REDIS_VERSION=3.0.6 \
+    REDIS_USER=redis \
     REDIS_DATA_DIR=/var/lib/redis \
     REDIS_LOG_DIR=/var/log/redis
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y redis-server \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y redis-server=2:${REDIS_VERSION}* \
  && sed 's/^daemonize yes/daemonize no/' -i /etc/redis/redis.conf \
  && sed 's/^bind 127.0.0.1/bind 0.0.0.0/' -i /etc/redis/redis.conf \
  && sed 's/^# unixsocket /unixsocket /' -i /etc/redis/redis.conf \
