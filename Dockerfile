@@ -1,5 +1,5 @@
-FROM sameersbn/ubuntu:16.04.20180124
-MAINTAINER sameer@damagehead.com
+FROM ubuntu:xenial-20180525
+LABEL maintainer="sameer@damagehead.com"
 
 ENV REDIS_USER=redis \
     REDIS_DATA_DIR=/var/lib/redis \
@@ -18,5 +18,4 @@ COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 
 EXPOSE 6379/tcp
-VOLUME ["${REDIS_DATA_DIR}"]
 ENTRYPOINT ["/sbin/entrypoint.sh"]
