@@ -1,4 +1,5 @@
 FROM ubuntu:bionic-20180526
+
 LABEL maintainer="sameer@damagehead.com"
 
 ENV REDIS_VERSION=4.0.9 \
@@ -11,6 +12,7 @@ RUN apt-get update \
  && sed 's/^bind /# bind /' -i /etc/redis/redis.conf \
  && sed 's/^logfile /# logfile /' -i /etc/redis/redis.conf \
  && sed 's/^daemonize yes/daemonize no/' -i /etc/redis/redis.conf \
+ && sed 's/^protected-mode yes/protected-mode no/' -i /etc/redis/redis.conf \
  && sed 's/^# unixsocket /unixsocket /' -i /etc/redis/redis.conf \
  && sed 's/^# unixsocketperm 700/unixsocketperm 777/' -i /etc/redis/redis.conf \
  && rm -rf /var/lib/apt/lists/*
