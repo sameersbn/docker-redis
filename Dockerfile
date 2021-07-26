@@ -1,8 +1,8 @@
-FROM ubuntu:bionic-20190612
+FROM ubuntu:focal-20210713
 
 LABEL maintainer="sameer@damagehead.com"
 
-ENV REDIS_VERSION=4.0.9 \
+ENV REDIS_VERSION=5.0.7 \
     REDIS_USER=redis \
     REDIS_DATA_DIR=/var/lib/redis \
     REDIS_LOG_DIR=/var/log/redis
